@@ -1,0 +1,53 @@
+esphome:
+  name: myesp06
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "weDX1uLzjDOIHhu/YyZCt72A1mC0NV545ZwcIyhI5Nk="
+
+ota:
+  password: "3dcf4ef2964dcf7ad78a55cbbc39b2bf"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+captive_portal:
+
+web_server:
+  port: 80
+
+mqtt:
+  broker: !secret mqtt_broker
+  username: !secret mqtt_user
+  password: !secret mqtt_password
+
+binary_sensor:
+  - platform: gpio
+    pin: 25
+    name: "myesp06 motion"
+    device_class: motion
+
+sensor:
+  - platform: dht
+    model: DHT22
+    pin: 27
+    temperature:
+      name: "myesp06 temperature"
+    humidity:
+      name: "myesp06 humidity"
+    update_interval: 10s
+
+light:
+  - platform: status_led
+    name: "myesp06 led"
+    pin: GPIO2
